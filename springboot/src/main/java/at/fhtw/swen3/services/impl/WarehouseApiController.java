@@ -1,10 +1,11 @@
-package at.fhtw.swen3.services;
+package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.persistence.Error;
 import at.fhtw.swen3.persistence.Hop;
 import at.fhtw.swen3.persistence.Warehouse;
 
 
+import at.fhtw.swen3.services.WarehouseApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

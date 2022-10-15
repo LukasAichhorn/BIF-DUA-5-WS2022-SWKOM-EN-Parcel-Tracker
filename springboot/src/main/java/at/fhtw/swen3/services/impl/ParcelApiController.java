@@ -1,4 +1,4 @@
-package at.fhtw.swen3.services;
+package at.fhtw.swen3.services.impl;
 
 import at.fhtw.swen3.persistence.Error;
 import at.fhtw.swen3.persistence.NewParcelInfo;
@@ -6,6 +6,7 @@ import at.fhtw.swen3.persistence.Parcel;
 import at.fhtw.swen3.persistence.TrackingInformation;
 
 
+import at.fhtw.swen3.services.ParcelApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
