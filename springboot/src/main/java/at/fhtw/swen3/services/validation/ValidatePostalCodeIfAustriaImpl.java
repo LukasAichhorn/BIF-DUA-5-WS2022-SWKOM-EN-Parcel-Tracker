@@ -13,14 +13,16 @@ public class ValidatePostalCodeIfAustriaImpl implements ConstraintValidator<Vali
 
     }
 
+
     @Override
     public boolean isValid(RecipientEntity recipientEntity, ConstraintValidatorContext constraintValidatorContext) {
         String country = recipientEntity.getCountry();
         if (country.equals("Austria") || country.equals("Österreich")) {
             return Pattern.matches("^A-[0-9]{4}", country);
+
         }
         //Skip validation on condition
-        return true;
+        return false;
 
     }
 }

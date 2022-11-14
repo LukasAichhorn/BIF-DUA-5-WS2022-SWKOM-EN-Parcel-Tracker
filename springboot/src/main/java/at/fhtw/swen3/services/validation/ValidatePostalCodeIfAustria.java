@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = { ValidatePostalCodeIfAustriaImpl.class })
 public @interface ValidatePostalCodeIfAustria {
 
-    String message() default "{com.example.validation.ValidAddress.message}";
+    String message() default "test";
 
     Class<?>[] groups() default {};
 

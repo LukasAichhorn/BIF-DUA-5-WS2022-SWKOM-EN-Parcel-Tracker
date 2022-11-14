@@ -1,6 +1,7 @@
 package at.fhtw.swen3.persistence.entities;
 
 import at.fhtw.swen3.services.validation.ValidatePostalCodeIfAustria;
+import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
-@ValidatePostalCodeIfAustria
+@ValidatePostalCodeIfAustria(message = "test")
 public class RecipientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
