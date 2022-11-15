@@ -5,6 +5,7 @@ package at.fhtw.swen3.persistence.entities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class WarehouseEntity extends HopEntity{
     @Column
     private Integer level;
 
+    @Singular
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
 
 }

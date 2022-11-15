@@ -9,6 +9,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
