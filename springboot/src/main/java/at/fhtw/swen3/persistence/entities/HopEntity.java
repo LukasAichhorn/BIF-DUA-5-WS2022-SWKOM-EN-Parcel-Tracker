@@ -1,10 +1,14 @@
 package at.fhtw.swen3.persistence.entities;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
-@Entity
-@Data
+@MappedSuperclass
+@SuperBuilder
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
