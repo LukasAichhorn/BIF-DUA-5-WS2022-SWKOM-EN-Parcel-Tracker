@@ -1,12 +1,19 @@
 package at.fhtw.swen3.persistence.entities;
 
-import lombok.Data;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-public class TransferwarehouseEntity {
+@SuperBuilder
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+public class TransferwarehouseEntity extends HopEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -20,4 +27,8 @@ public class TransferwarehouseEntity {
 
     @Column
     private String logisticsPartnerUrl;
+
+    public TransferwarehouseEntity() {
+        super();
+    }
 }
