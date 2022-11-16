@@ -11,6 +11,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.Pattern;
+import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
+
 
 
 
@@ -26,6 +29,7 @@ public class WarehouseEntity extends HopEntity{
 
     @Column
     private Integer level;
+
 
     @Singular
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
