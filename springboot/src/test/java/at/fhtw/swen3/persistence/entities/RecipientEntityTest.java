@@ -31,6 +31,7 @@ public class RecipientEntityTest {
         testEntity.setPostalCode("A-1200");
         testEntity.setStreet("Neubaugasse 12a");
         testEntity.setCity("Deutsch Schützen-Eisenberg");
+        testEntity.setName("Vorname Nachname");
     }
 
     @Test
@@ -79,6 +80,19 @@ public class RecipientEntityTest {
     @Test
     public void TestValidation_City_if_Country_is_Austria_error(){
         testEntity.setCity(TestValuesRecipient.CITY_WRONG);
+        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
+        System.out.println(violations);
+        assertFalse(violations.isEmpty());
+    }
+    @Test
+    public void TestValidation_Name_if_Country_is_Austria_Correct(){
+        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
+        System.out.println(violations);
+        assertTrue(violations.isEmpty());
+    }
+    @Test
+    public void TestValidation_Name_if_Country_is_Austria_error(){
+        testEntity.setName("vorname Nachname");
         Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
         System.out.println(violations);
         assertFalse(violations.isEmpty());

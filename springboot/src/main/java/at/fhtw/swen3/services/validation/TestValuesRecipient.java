@@ -9,6 +9,8 @@ public  final class TestValuesRecipient {
     public static final String COUNTRY_OESTERREICH = "Österreich";
     public static final String CITY_CORRECT = "Deutsch Schützen-Eisenberg";
     public static final String CITY_WRONG = "deutsch Schützen Eisenberg";
+    public static final String NAME_CORRECT = "Felix Neubauer";
+    public static final String NAME_WRONG = "felix Neubauer";
 
 
 
