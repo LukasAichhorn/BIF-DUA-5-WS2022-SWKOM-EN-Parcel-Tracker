@@ -1,16 +1,27 @@
 package at.fhtw.swen3.persistence.entities;
 
 
-import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
-import lombok.Data;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Singular;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.Pattern;
+import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 
 
-@Entity
-@Data
-public class WarehouseEntity {
+
+
+@SuperBuilder
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+public class WarehouseEntity extends HopEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,10 +34,7 @@ public class WarehouseEntity {
     @Pattern(regexp = "^[A-Z][a-zA-ZäöüÄÖÜß. -]+[^ ]",message = ValidatorErrorMessages.ERROR_MESSAGE_WAREHOUSE_DESCRIPTION)
     private String description;
 
-
-
-/*
-    TODO: nextHops korrekt implementieren.
+    @Singular
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
-*/
+
 }

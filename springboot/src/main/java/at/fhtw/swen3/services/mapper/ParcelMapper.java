@@ -7,11 +7,13 @@ import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.TrackingInformation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {HopArrivalMapper.class})
+@Mapper(uses = {HopArrivalMapper.class, RecipientMapper.class})
 public interface ParcelMapper {
 
-    //TODO: Mapping für trackinginformation umsetzen
+    ParcelMapper INSTANCE = Mappers.getMapper(ParcelMapper.class);
+
     @Mapping(source = "p.weight", target = "weight")
     @Mapping(source = "p.recipient", target = "recipient")
     @Mapping(source = "p.sender", target = "sender")
@@ -20,6 +22,20 @@ public interface ParcelMapper {
     @Mapping(source = "ti.futureHops", target = "futureHops")
     @Mapping(source = "ti.state", target = "state")
     ParcelEntity fromParcelDtosToParcelEntity(Parcel p, NewParcelInfo npi, TrackingInformation ti);
+
+    @Mapping(source = "pe.weight", target = "weight")
+    @Mapping(source = "pe.recipient", target = "recipient")
+    @Mapping(source = "pe.sender", target = "sender")
+    Parcel fromParcelEntityToParcel(ParcelEntity pe);
+
+    @Mapping(source = "pe.trackingId", target = "trackingId")
+    NewParcelInfo fromParcelEntityToNewParcelInfo(ParcelEntity pe);
+
+    @Mapping(source = "pe.visitedHops", target = "visitedHops")
+    @Mapping(source = "pe.futureHops", target = "futureHops")
+    @Mapping(source = "pe.state", target = "state")
+    TrackingInformation fromParcelEntityToTrackingInformation(ParcelEntity pe);
+
 
 
 

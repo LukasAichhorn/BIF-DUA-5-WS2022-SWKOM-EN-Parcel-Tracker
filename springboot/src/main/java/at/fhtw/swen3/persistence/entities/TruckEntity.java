@@ -1,12 +1,16 @@
 package at.fhtw.swen3.persistence.entities;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-public class TruckEntity {
+@SuperBuilder
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+public class TruckEntity extends HopEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
@@ -16,6 +20,9 @@ public class TruckEntity {
 
     @Column
     private String numberPlate;
-    
-    
+
+
+    public TruckEntity() {
+        super();
+    }
 }
