@@ -7,4 +7,6 @@ private ValidatorErrorMessages(){};
     public static final String ERROR_MESSAGE_STREET = "Validation Error in the format of the Street";
     public static final String ERROR_MESSAGE_NAME = "Validation Error in the format of Name";
 
+    public static final String ERROR_MESSAGE_WAREHOUSE_DESCRIPTION = "Validation Error in the warehouse description";
+
 }
