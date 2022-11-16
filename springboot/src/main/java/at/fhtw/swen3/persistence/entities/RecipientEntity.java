@@ -8,6 +8,7 @@ import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -18,21 +19,27 @@ import javax.persistence.*;
 public class RecipientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @NotNull
     private long id;
 
     @Column
+    @NotNull
     private String name;
 
     @Column
+    @NotNull
     private String street;
 
     @Column
+    @NotNull
     private String postalCode;
 
     @Column
+    @NotNull
     private String city;
 
     @Column
+    @NotNull
     private String country;
     
     
