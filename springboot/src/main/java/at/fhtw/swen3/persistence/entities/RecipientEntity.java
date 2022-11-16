@@ -1,16 +1,15 @@
 package at.fhtw.swen3.persistence.entities;
 
-import at.fhtw.swen3.services.validation.ValidatePostalCodeIfAustria;
-import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
+import at.fhtw.swen3.services.validation.PostalCodeIfAutria.ValidatePostalCodeIfAustria;
+import at.fhtw.swen3.services.validation.StreetIfAustria.ValidateStreetIfAustria;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
-@ValidatePostalCodeIfAustria(message = "test")
+@ValidatePostalCodeIfAustria(message = "PostalCode-error")
+@ValidateStreetIfAustria(message = "Street-error")
 public class RecipientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

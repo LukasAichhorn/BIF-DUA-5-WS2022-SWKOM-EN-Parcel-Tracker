@@ -1,4 +1,4 @@
-package at.fhtw.swen3.services.validation;
+package at.fhtw.swen3.services.validation.StreetIfAustria;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -12,10 +12,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Target(TYPE)
 @Retention(RUNTIME)
-@Constraint(validatedBy = { ValidatePostalCodeIfAustriaImpl.class })
-public @interface ValidatePostalCodeIfAustria {
+@Constraint(validatedBy = { ValidateStreetIfAustriaImpl.class })
+public @interface ValidateStreetIfAustria {
 
-    String message() default "test";
+    String message();
 
     Class<?>[] groups() default {};
 
