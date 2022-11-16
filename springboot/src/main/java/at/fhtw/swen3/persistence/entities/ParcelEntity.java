@@ -1,8 +1,10 @@
 package at.fhtw.swen3.persistence.entities;
 
 import at.fhtw.swen3.services.dto.Recipient;
+import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 import lombok.Data;
 
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class ParcelEntity {
     private Recipient recipient;
 
     private Recipient sender;
-
+    @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)
     private String trackingId;
 
     private StateEnum state;

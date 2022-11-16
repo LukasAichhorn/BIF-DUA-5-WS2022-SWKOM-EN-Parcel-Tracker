@@ -8,5 +8,7 @@ private ValidatorErrorMessages(){};
     public static final String ERROR_MESSAGE_NAME = "Validation Error in the format of Name";
 
     public static final String ERROR_MESSAGE_WAREHOUSE_DESCRIPTION = "Validation Error in the warehouse description";
+    public static final String ERROR_MESSAGE_HOP_ARRIVALCODE = "Validation Error in the Hop Code";
+    public static final String ERROR_MESSAGE_PARCEL_CODE = "Validation Error in the Parcel Code";
 
 }
