@@ -1,14 +1,15 @@
-package at.fhtw.swen3.services.validation.StreetIfAustria;
+package at.fhtw.swen3.services.validation.CityIfAustria;
 
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
+import jdk.jfr.Frequency;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
-public class ValidateStreetIfAustriaImpl implements ConstraintValidator<ValidateStreetIfAustria, RecipientEntity> {
+public class ValidateCityIfAustriaImpl implements ConstraintValidator<ValidateCityIfAustria, RecipientEntity> {
 
-    public void initialize(ValidateStreetIfAustria constraintAnnotation) {
+    public void initialize(ValidateCityIfAustria constraintAnnotation) {
 
     }
 
@@ -16,9 +17,9 @@ public class ValidateStreetIfAustriaImpl implements ConstraintValidator<Validate
     @Override
     public boolean isValid(RecipientEntity recipientEntity, ConstraintValidatorContext constraintValidatorContext) {
         String country = recipientEntity.getCountry();
-        String street = recipientEntity.getStreet();
+        String city = recipientEntity.getCity();
         if (country.equals("Austria") || country.equals("Österreich")) {
-            return Pattern.matches("^[a-zA-ZäöüÄÖÜß.]+ ([0-9]+[a-z]|([0-9]{2}\\/){0,2}[0-9]{2})", street);
+            return Pattern.matches("^[A-Z][a-zA-ZäöüÄÖÜß. -]+[^ ]", city );
 
         }
         //Skip validation on condition

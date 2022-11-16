@@ -1,6 +1,9 @@
 package at.fhtw.swen3.persistence.entities;
 
+import at.fhtw.swen3.services.validation.TestValuesRecipient;
 import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -17,50 +20,44 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RecipientEntityTest {
     private RecipientEntity testEntity;
+    private ValidatorFactory factory;
+    private Validator validator;
+    @BeforeEach
+    public void setup(){
+        factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+        testEntity = new RecipientEntity();
+        testEntity.setCountry("Austria");
+        testEntity.setPostalCode("A-1200");
+        testEntity.setStreet("Neubaugasse 12a");
+        testEntity.setCity("Deutsch Schützen-Eisenberg");
+    }
 
     @Test
     public void TestValidation_PostalCode_if_Country_is_Austria_error(){
-        testEntity = new RecipientEntity();
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-       testEntity.setCountry("Austria");
        testEntity.setPostalCode("A-12");
-       testEntity.setStreet("Neubaugasse 12a");
-        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
+       Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
         System.out.println(violations);
         assertFalse(violations.isEmpty());
     }
     @Test
     public void TestValidation_PostalCode_if_Country_is_Austria_correct(){
-        testEntity = new RecipientEntity();
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
         testEntity.setCountry("Österreich");
         testEntity.setPostalCode("A-1120");
-        testEntity.setStreet("Neubaugasse 12a");
         Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
         System.out.println(violations);
         assertTrue(violations.isEmpty());
     }
     @Test
     public void TestValidation_PostalCode_if_Country_isNot_Austria(){
-        testEntity = new RecipientEntity();
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
         testEntity.setCountry("Hungary");
         testEntity.setPostalCode("A-12");
-        testEntity.setStreet("Neubaugasse 12a");
         Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
         System.out.println(violations);
         assertTrue(violations.isEmpty());
     }
     @Test
     public void TestValidation_Street_if_Country_is_Austria_correct_01(){
-        testEntity = new RecipientEntity();
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        testEntity.setCountry("Austria");
-        testEntity.setPostalCode("A-1120");
         testEntity.setStreet("Neubaugasse 12a");
         Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
         System.out.println(violations);
@@ -68,14 +65,23 @@ public class RecipientEntityTest {
     }
     @Test
     public void TestValidation_Street_if_Country_is_Austria_correct_02(){
-        testEntity = new RecipientEntity();
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        testEntity.setCountry("Austria");
-        testEntity.setPostalCode("A-1120");
         testEntity.setStreet("Neubaugasse 12/12/12");
         Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
         System.out.println(violations);
         assertTrue(violations.isEmpty());
     }
+    @Test
+    public void TestValidation_City_if_Country_is_Austria_correct(){
+        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
+        System.out.println(violations);
+        assertTrue(violations.isEmpty());
+    }
+    @Test
+    public void TestValidation_City_if_Country_is_Austria_error(){
+        testEntity.setCity(TestValuesRecipient.CITY_WRONG);
+        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
+        System.out.println(violations);
+        assertFalse(violations.isEmpty());
+    }
+
 }
