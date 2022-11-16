@@ -1,14 +1,17 @@
 package at.fhtw.swen3.persistence.entities;
 
-import at.fhtw.swen3.services.dto.Recipient;
+
 import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
 public class ParcelEntity {
     public enum StateEnum {
         PICKUP("Pickup"),
@@ -48,20 +51,17 @@ public class ParcelEntity {
 
     private Float weight;
 
-    private Recipient recipient;
+    private RecipientEntity recipient;
 
-    private Recipient sender;
+    private RecipientEntity sender;
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)
     private String trackingId;
 
     private StateEnum state;
 
+    @Singular
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
+    @Singular
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
-
-
-
-
-
 }

@@ -30,9 +30,6 @@ public class WarehouseEntity extends HopEntity{
     @Column
     private Integer level;
 
-    @Column
-    @Pattern(regexp = "^[A-Z][a-zA-ZäöüÄÖÜß. -]+[^ ]",message = ValidatorErrorMessages.ERROR_MESSAGE_WAREHOUSE_DESCRIPTION)
-    private String description;
 
     @Singular
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
