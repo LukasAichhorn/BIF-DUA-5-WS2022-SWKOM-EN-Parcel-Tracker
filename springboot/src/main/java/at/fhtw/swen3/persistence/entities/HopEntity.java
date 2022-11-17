@@ -3,6 +3,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @MappedSuperclass
 @SuperBuilder
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Entity
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -19,6 +22,7 @@ public class HopEntity {
     private String hopType;
 
     @Column
+    @Pattern(regexp = "^A-[0-9]{4}")
     private String code;
 
     @Column
@@ -32,5 +36,6 @@ public class HopEntity {
 
     @OneToOne
     @Column
+    @NotNull
     private GeoCoordinateEntity locationCoordinates;
 }
