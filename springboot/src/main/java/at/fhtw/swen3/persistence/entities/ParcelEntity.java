@@ -6,12 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Builder
+@Entity
 public class ParcelEntity {
     public enum StateEnum {
         PICKUP("Pickup"),
@@ -49,19 +53,33 @@ public class ParcelEntity {
         }
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+
+    @DecimalMin("0")
     private Float weight;
 
+    @OneToOne
+    @NotNull
     private RecipientEntity recipient;
 
+    @OneToOne
+    @NotNull
     private RecipientEntity sender;
+
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)
+    @NotNull
     private String trackingId;
 
+    @NotNull
     private StateEnum state;
 
     @Singular
+    @OneToMany
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
     @Singular
+    @OneToMany
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
 }

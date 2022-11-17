@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.OffsetDateTime;
 
@@ -16,6 +17,7 @@ public class HopArrivalEntity {
     private long id;
 
     @Column
+    @NotNull
     @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$",message = ValidatorErrorMessages.ERROR_MESSAGE_HOP_ARRIVALCODE)
     private String code;
 
@@ -23,6 +25,10 @@ public class HopArrivalEntity {
     private String description;
 
     @Column
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dateTime;
+
+    @ManyToOne
+    private ParcelEntity parcel;
 }
