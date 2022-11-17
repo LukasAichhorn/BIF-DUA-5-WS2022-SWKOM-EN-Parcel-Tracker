@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -24,18 +25,22 @@ public class RecipientEntity {
 
     @Column
     @NotNull
+    @Pattern(regexp = "^[A-Z][a-zA-ZäöüÄÖÜß. -]+[^ ]")
     private String name;
 
     @Column
     @NotNull
+    @Pattern(regexp = "^[a-zA-ZäöüÄÖÜß.]+ ([0-9]+[a-z]|([0-9]{2}\\/){0,2}[0-9]{2})")
     private String street;
 
     @Column
     @NotNull
+    @Pattern(regexp = "^A-[0-9]{4}")
     private String postalCode;
 
     @Column
     @NotNull
+    @Pattern(regexp = "^[A-Z][a-zA-ZäöüÄÖÜß. -]+[^ ]")
     private String city;
 
     @Column

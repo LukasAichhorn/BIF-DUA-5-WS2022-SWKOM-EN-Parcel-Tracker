@@ -4,6 +4,7 @@ package at.fhtw.swen3.persistence.entities;
 import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Singular;
 
 import javax.persistence.*;
@@ -77,9 +78,13 @@ public class ParcelEntity {
 
     @Singular
     @OneToMany
+    @NotNull
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
     @Singular
     @OneToMany
+    @NotNull
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
+
+    public ParcelEntity() {};
 }

@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 
@@ -21,6 +22,7 @@ import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class WarehouseEntity extends HopEntity{
 
     @Id
@@ -32,6 +34,12 @@ public class WarehouseEntity extends HopEntity{
 
 
     @Singular
+    @NotNull
+    @OneToMany
     private List<WarehouseNextHopsEntity> nextHops = new ArrayList<>();
+
+    public WarehouseEntity() {};
+
+
 
 }
