@@ -2,10 +2,7 @@ package at.fhtw.swen3.persistence.entities;
 
 
 import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Singular;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -14,10 +11,16 @@ import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
+@AllArgsConstructor
 public class ParcelEntity {
+    public ParcelEntity() {
+
+    }
+
     public enum StateEnum {
         PICKUP("Pickup"),
 
@@ -86,5 +89,4 @@ public class ParcelEntity {
     @NotNull
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
 
-    public ParcelEntity() {};
 }
