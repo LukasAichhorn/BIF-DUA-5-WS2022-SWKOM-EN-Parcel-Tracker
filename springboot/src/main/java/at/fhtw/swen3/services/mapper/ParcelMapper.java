@@ -23,6 +23,11 @@ public interface ParcelMapper {
     @Mapping(source = "ti.state", target = "state")
     ParcelEntity fromParcelDtosToParcelEntity(Parcel p, NewParcelInfo npi, TrackingInformation ti);
 
+    @Mapping(source = "p.weight", target = "weight")
+    @Mapping(source = "p.recipient", target = "recipient")
+    @Mapping(source = "p.sender", target = "sender")
+    ParcelEntity fromParcelDtoToParcelEntity(Parcel p);
+
     @Mapping(source = "pe.weight", target = "weight")
     @Mapping(source = "pe.recipient", target = "recipient")
     @Mapping(source = "pe.sender", target = "sender")

@@ -1,7 +1,6 @@
 package at.fhtw.swen3.services.validation.CityIfAustria;
 
 import at.fhtw.swen3.persistence.entities.RecipientEntity;
-import jdk.jfr.Frequency;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
