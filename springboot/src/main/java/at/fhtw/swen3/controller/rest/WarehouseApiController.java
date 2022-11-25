@@ -1,0 +1,83 @@
+package at.fhtw.swen3.controller.rest;
+
+
+import at.fhtw.swen3.controller.ApiUtil;
+import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.services.dto.Hop;
+import at.fhtw.swen3.services.dto.Warehouse;
+import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.NativeWebRequest;
+
+import java.util.Optional;
+import javax.annotation.Generated;
+import javax.validation.Valid;
+
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-10-14T15:32:51.812001Z[Etc/UTC]")
+@RestController
+public class WarehouseApiController implements WarehouseApi {
+
+    private final NativeWebRequest request;
+
+
+    @Autowired
+    public WarehouseApiController(NativeWebRequest request) {
+        this.request = request;
+    }
+
+    @Override
+    public Optional<NativeWebRequest> getRequest() {
+        return Optional.ofNullable(request);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/warehouse",
+            produces = { "application/json" }
+    )
+    @Override
+    @ResponseBody
+    public ResponseEntity<Warehouse> exportWarehouses() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/warehouse/{code}",
+            produces = { "application/json" }
+    )
+    @Override
+    public ResponseEntity<Hop> getWarehouse(
+            @Parameter(name = "code", description = "", required = true) @PathVariable("code") String code
+    ) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/warehouse",
+            produces = { "application/json" },
+            consumes = { "application/json" }
+    )
+    @Override
+    @ResponseBody
+    public ResponseEntity<Void> importWarehouses(
+            @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
+    ) {
+        System.out.println(warehouse);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
+    }
+
+
+
+}
