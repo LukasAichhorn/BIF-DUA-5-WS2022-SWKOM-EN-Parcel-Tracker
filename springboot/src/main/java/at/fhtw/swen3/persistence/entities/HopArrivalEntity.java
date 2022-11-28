@@ -30,5 +30,6 @@ public class HopArrivalEntity {
     private OffsetDateTime dateTime;
 
     @ManyToOne
+    @JoinColumn(name = "parcels")
     private ParcelEntity parcel;
 }
