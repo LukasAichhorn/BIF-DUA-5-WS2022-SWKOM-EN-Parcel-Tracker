@@ -66,10 +66,12 @@ public class ParcelEntity {
 
     @OneToOne
     @NotNull
+    @JoinColumn(name = "recipients")
     private RecipientEntity recipient;
 
     @OneToOne
     @NotNull
+    @JoinColumn(name = "recipients")
     private RecipientEntity sender;
 
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)

@@ -3,6 +3,7 @@ package at.fhtw.swen3.controller.rest;
 
 import at.fhtw.swen3.controller.ParcelApi;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.TrackingInformation;
@@ -28,7 +29,8 @@ import javax.validation.constraints.Pattern;
 public class ParcelApiController implements ParcelApi {
 
     private final NativeWebRequest request;
-    //private final ParcelService parcelService;
+    @Autowired
+    private ParcelService parcelService;
 
     @Autowired
     public ParcelApiController(NativeWebRequest request) {
@@ -50,6 +52,7 @@ public class ParcelApiController implements ParcelApi {
         @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 "
                 , required = true) @PathVariable("trackingId") String trackingId)
     {
+        parcelService.reportParcelDelivery(trackingId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @RequestMapping(
@@ -94,10 +97,19 @@ public class ParcelApiController implements ParcelApi {
         //TrackingInformation trackingInformation = ParcelMapper.INSTANCE.fromParcelEntityToTrackingInformation(parcelEntity);
         return new ResponseEntity<TrackingInformation>(HttpStatus.OK);
     }
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/parcel/{trackingId}",
+            produces = { "application/json" },
+            consumes = { "application/json" }
+    )
 
     @Override
-    public ResponseEntity<NewParcelInfo> transitionParcel(String trackingId, Parcel parcel) {
-        return ParcelApi.super.transitionParcel(trackingId, parcel);
+    public ResponseEntity<NewParcelInfo> transitionParcel(
+            @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
+            @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
+    ) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
