@@ -97,10 +97,19 @@ public class ParcelApiController implements ParcelApi {
         //TrackingInformation trackingInformation = ParcelMapper.INSTANCE.fromParcelEntityToTrackingInformation(parcelEntity);
         return new ResponseEntity<TrackingInformation>(HttpStatus.OK);
     }
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/parcel/{trackingId}",
+            produces = { "application/json" },
+            consumes = { "application/json" }
+    )
 
     @Override
-    public ResponseEntity<NewParcelInfo> transitionParcel(String trackingId, Parcel parcel) {
-        return ParcelApi.super.transitionParcel(trackingId, parcel);
+    public ResponseEntity<NewParcelInfo> transitionParcel(
+            @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
+            @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
+    ) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
