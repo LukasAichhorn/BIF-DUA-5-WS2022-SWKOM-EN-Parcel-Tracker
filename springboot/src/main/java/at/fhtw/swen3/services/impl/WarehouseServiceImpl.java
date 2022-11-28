@@ -10,7 +10,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
 
-    @Autowired
-    private WarehouseRepository warehouseRepository;
-
 }
