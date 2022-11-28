@@ -1,6 +1,8 @@
 package at.fhtw.swen3.services;
 
-public interface ParcelService {
+import at.fhtw.swen3.persistence.entities.ParcelEntity;
 
+public interface ParcelService {
+    void reportParcelDelivery(String trackingId);
 
 }
