@@ -21,7 +21,7 @@ public class RecipientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @NotNull
-    private long id;
+    private String id;
 
     @Column
     @NotNull

@@ -8,9 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface ParcelRepository extends JpaRepository<ParcelEntity,Long> {
-    //@Modifying
-    //@Query(value= "UPDATE ")
-    void reportParcelDelivery(String trackingId);
+public interface ParcelRepository extends JpaRepository<ParcelEntity,String> {
 }

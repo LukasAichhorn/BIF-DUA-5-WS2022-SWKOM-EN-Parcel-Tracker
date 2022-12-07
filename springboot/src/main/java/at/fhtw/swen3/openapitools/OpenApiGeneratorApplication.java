@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan(basePackages = {"at.fhtw.swen3.openapitools", "at.fhtw.swen3.services" , "at.fhtw.swen3" +
+@ComponentScan(basePackages = {"at.fhtw.swen3.openapitools", "at.fhtw.swen3.services", "at.fhtw.swen3" +
         ".configuration", "at.fhtw.swen3.controller", "at.fhtw.swen3.persistence"})
 public class OpenApiGeneratorApplication {
 

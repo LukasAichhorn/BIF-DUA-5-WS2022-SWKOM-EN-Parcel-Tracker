@@ -1,6 +1,7 @@
 package at.fhtw.swen3.persistence.entities;
 
 
+import at.fhtw.swen3.services.dto.HopArrival;
 import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 import lombok.*;
 
@@ -59,7 +60,7 @@ public class ParcelEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private String id;
 
     @DecimalMin("0")
     private Float weight;
@@ -83,12 +84,12 @@ public class ParcelEntity {
 
     @Singular
     @OneToMany
-    @NotNull
+    //@NotNull
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
     @Singular
     @OneToMany
-    @NotNull
+    //@NotNull
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
 
 }
