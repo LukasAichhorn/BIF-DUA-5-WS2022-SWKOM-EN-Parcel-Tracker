@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-@MappedSuperclass
+
 @SuperBuilder
 @RequiredArgsConstructor
 @Getter
@@ -15,7 +15,7 @@ import javax.validation.constraints.Pattern;
 @Entity
 public class HopEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column
@@ -35,7 +35,5 @@ public class HopEntity {
     private String locationName;
 
     @OneToOne
-    @Column
-    @NotNull
     private GeoCoordinateEntity locationCoordinates;
 }

@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
+@Table(name = "Parcels")
 @AllArgsConstructor
 public class ParcelEntity {
     public ParcelEntity() {
@@ -59,7 +60,7 @@ public class ParcelEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @DecimalMin("0")
@@ -67,12 +68,12 @@ public class ParcelEntity {
 
     @OneToOne
     @NotNull
-    @JoinColumn(name = "recipients")
+    @JoinColumn(name = "recipient_id",referencedColumnName = "id")
     private RecipientEntity recipient;
 
     @OneToOne
     @NotNull
-    @JoinColumn(name = "recipients")
+    @JoinColumn(name = "sender_id",referencedColumnName = "id")
     private RecipientEntity sender;
 
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)

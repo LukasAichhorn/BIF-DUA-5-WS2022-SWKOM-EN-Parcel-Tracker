@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
+@Table(name="Recipients")
 @Data
 @ValidatePostalCodeIfAustria(message = ValidatorErrorMessages.ERROR_MESSAGE_POSTAL)
 @ValidateStreetIfAustria(message = ValidatorErrorMessages.ERROR_MESSAGE_STREET)
@@ -19,7 +20,7 @@ import javax.validation.constraints.Pattern;
 @ValidateNameIfAustria(message = ValidatorErrorMessages.ERROR_MESSAGE_NAME)
 public class RecipientEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private String id;
 

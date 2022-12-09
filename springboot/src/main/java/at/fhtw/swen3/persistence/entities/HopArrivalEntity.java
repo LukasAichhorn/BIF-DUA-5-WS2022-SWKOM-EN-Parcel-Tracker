@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Data
+@Table(name = "HopArrivals")
 public class HopArrivalEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
