@@ -118,7 +118,13 @@
             <version>42.5.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
     </dependencies>
+
+
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
