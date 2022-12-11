@@ -12,45 +12,48 @@ import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.HopArrival;
 import at.fhtw.swen3.services.dto.Parcel;
 import com.sun.xml.bind.v2.TODO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class ParcelServiceImpl implements ParcelService {
+    @Autowired
     private ParcelRepository parcelRepository;
+    @Autowired
     private RecipientRepository recipientRepository;
+    @Autowired
     private HopArrivalRepository hopArrivalRepository;
 
     @Override
     public Optional<ParcelEntity> submitParcelToLogisticsService(ParcelEntity newParcel) {
 
-        Optional<RecipientEntity> sender = recipientRepository.findById(newParcel.getSender().getId());
-        Optional<RecipientEntity> receiver = recipientRepository.findById(newParcel.getRecipient().getId());
-
-        if (sender.isPresent() && receiver.isPresent()) {
+        //Optional<RecipientEntity> sender = recipientRepository.findById(newParcel.getSender().getId());
+        //Optional<RecipientEntity> receiver = recipientRepository.findById(newParcel.getRecipient().getId());
+        RecipientEntity recipientEntity = newParcel.getRecipient();
+        RecipientEntity senderEntity = newParcel.getSender();
+        recipientRepository.save(recipientEntity);
+        recipientRepository.save(senderEntity);
+        recipientRepository.flush();
+        // TODO how to generate unique String for Parcel
+        newParcel.setTrackingId("AAAAAAAAA");
+        newParcel.setState(ParcelEntity.StateEnum.INTRANSPORT);
             ParcelEntity parcel = parcelRepository.save(newParcel);
             parcelRepository.flush();
-            String trackingId = parcel.getTrackingId();
-            return parcelRepository.findById(trackingId);
 
-        }
-        return Optional.empty();
+            long id = parcel.getId();
+        return parcelRepository.findById(id);
     }
 
     @Override
     public void reportParcelDelivery(String trackingId) {
-        Optional<ParcelEntity> parcel = parcelRepository.findById(trackingId);
 
-        if (parcel.isPresent()) {
-            parcel.get().setState(ParcelEntity.StateEnum.DELIVERED);
-            parcelRepository.save(parcel.get());
-        }
     }
 
     @Override
     public void reportParcelArrivedAtHop(String trackingId, String hopCode) {
-        Optional<ParcelEntity> parcel = parcelRepository.findById(trackingId);
+        Optional<ParcelEntity> parcel = parcelRepository.findByTrackingId(trackingId);
         Optional<HopArrivalEntity> hop = hopArrivalRepository.findById(hopCode);
 
         if (parcel.isPresent() && hop.isPresent()) {
@@ -67,7 +70,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public Optional<ParcelEntity> getCurrentStateOfParcel(String trackingId) {
-        return parcelRepository.findById(trackingId);
+        return parcelRepository.findByTrackingId(trackingId);
 
 
     }

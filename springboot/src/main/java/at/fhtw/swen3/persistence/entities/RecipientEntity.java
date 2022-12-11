@@ -20,9 +20,9 @@ import javax.validation.constraints.Pattern;
 @ValidateNameIfAustria(message = ValidatorErrorMessages.ERROR_MESSAGE_NAME)
 public class RecipientEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @NotNull
-    private String id;
+    private long id;
 
     @Column
     @NotNull

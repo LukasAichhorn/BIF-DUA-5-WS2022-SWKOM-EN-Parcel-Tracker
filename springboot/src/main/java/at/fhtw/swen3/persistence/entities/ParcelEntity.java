@@ -60,8 +60,8 @@ public class ParcelEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
 
     @DecimalMin("0")
     private Float weight;
@@ -77,7 +77,8 @@ public class ParcelEntity {
     private RecipientEntity sender;
 
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)
-    @NotNull
+   @NotNull
+    @Column
     private String trackingId;
 
     @NotNull

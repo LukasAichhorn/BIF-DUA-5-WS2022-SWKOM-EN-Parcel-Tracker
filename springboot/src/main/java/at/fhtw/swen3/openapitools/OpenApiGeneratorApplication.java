@@ -10,9 +10,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-
+@EnableJpaRepositories("at.fhtw.swen3.persistence.repositories")
 @EntityScan("at.fhtw.swen3.persistence.entities")
 @ComponentScan(basePackages = {"at.fhtw.swen3.openapitools", "at.fhtw.swen3.services", "at.fhtw.swen3" +
         ".configuration", "at.fhtw.swen3.controller", "at.fhtw.swen3.persistence", "at.fhtw.swen3.persistence.entities","at.fhtw.swen3" +

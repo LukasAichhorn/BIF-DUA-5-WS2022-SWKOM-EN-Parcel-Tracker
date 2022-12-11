@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface ParcelRepository extends JpaRepository<ParcelEntity,String> {
+public interface ParcelRepository extends JpaRepository<ParcelEntity,Long> {
+    Optional<ParcelEntity> findByTrackingId(String trackingId);
 }
