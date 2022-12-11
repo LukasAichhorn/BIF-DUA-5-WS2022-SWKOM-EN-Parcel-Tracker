@@ -62,7 +62,7 @@ public interface ParcelApi {
         value = "/parcel/{trackingId}/reportDelivery/",
         produces = { "application/json" }
     )
-    default ResponseEntity<Void> reportParcelDelivery(
+    default ResponseEntity<?> reportParcelDelivery(
         @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

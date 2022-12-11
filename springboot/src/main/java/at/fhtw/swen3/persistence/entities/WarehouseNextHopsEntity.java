@@ -19,8 +19,7 @@ public class WarehouseNextHopsEntity {
     private Integer traveltimeMins;
 
 
-    @Column
     @NotNull
-    @ManyToOne
+    @OneToOne
     private HopEntity hop;
 }

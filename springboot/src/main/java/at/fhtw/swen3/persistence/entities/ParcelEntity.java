@@ -1,6 +1,7 @@
 package at.fhtw.swen3.persistence.entities;
 
 
+import at.fhtw.swen3.services.dto.HopArrival;
 import at.fhtw.swen3.services.validation.ValidatorErrorMessages;
 import lombok.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
+@Table(name = "Parcels")
 @AllArgsConstructor
 public class ParcelEntity {
     public ParcelEntity() {
@@ -66,16 +68,17 @@ public class ParcelEntity {
 
     @OneToOne
     @NotNull
-    @JoinColumn(name = "recipients")
+    @JoinColumn(name = "recipient_id",referencedColumnName = "id")
     private RecipientEntity recipient;
 
     @OneToOne
     @NotNull
-    @JoinColumn(name = "recipients")
+    @JoinColumn(name = "sender_id",referencedColumnName = "id")
     private RecipientEntity sender;
 
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)
-    @NotNull
+   @NotNull
+    @Column
     private String trackingId;
 
     @NotNull
@@ -83,12 +86,12 @@ public class ParcelEntity {
 
     @Singular
     @OneToMany
-    @NotNull
+    //@NotNull
     private List<HopArrivalEntity> visitedHops = new ArrayList<>();
 
     @Singular
     @OneToMany
-    @NotNull
+    //@NotNull
     private List<HopArrivalEntity> futureHops = new ArrayList<>();
 
 }
