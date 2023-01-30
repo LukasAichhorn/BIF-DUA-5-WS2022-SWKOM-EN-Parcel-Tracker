@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name="Recipients")
+@Table(name="recipients")
 @Data
 @ValidatePostalCodeIfAustria(message = ValidatorErrorMessages.ERROR_MESSAGE_POSTAL)
 @ValidateStreetIfAustria(message = ValidatorErrorMessages.ERROR_MESSAGE_STREET)

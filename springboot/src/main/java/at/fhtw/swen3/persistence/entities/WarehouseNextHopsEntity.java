@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Data
 @Entity
+@Table(name = "warehouseNextHops")
 public class WarehouseNextHopsEntity {
 
     @Id
@@ -23,7 +24,7 @@ public class WarehouseNextHopsEntity {
 
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private HopEntity hop;
 
 

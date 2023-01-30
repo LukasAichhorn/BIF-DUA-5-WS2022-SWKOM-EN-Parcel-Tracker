@@ -10,10 +10,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+
 public class TruckEntity extends HopEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+
 
     @Column
     private String regionGeoJson;

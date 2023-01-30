@@ -12,10 +12,13 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @Entity
+@Table(name = "hopEntity")
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private int id;
 
     @Column

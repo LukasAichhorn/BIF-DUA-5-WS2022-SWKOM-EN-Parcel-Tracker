@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "Errors")
+@Table(name = "errors")
 public class ErrorEntity {
 
     @Id
