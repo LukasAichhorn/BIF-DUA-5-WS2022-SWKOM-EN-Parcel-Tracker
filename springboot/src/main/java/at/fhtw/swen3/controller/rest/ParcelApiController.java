@@ -12,6 +12,7 @@ import at.fhtw.swen3.services.dto.TrackingInformation;
 import at.fhtw.swen3.services.mapper.ErrorMapper;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ import javax.validation.constraints.Pattern;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-10-14T15:32:51.812001Z[Etc/UTC]")
 @Controller
+@Slf4j
 public class ParcelApiController implements ParcelApi {
 
     private final NativeWebRequest request;
@@ -55,6 +57,7 @@ public class ParcelApiController implements ParcelApi {
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 "
                     , required = true) @PathVariable("trackingId") String trackingId) {
         parcelService.reportParcelDelivery(trackingId);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

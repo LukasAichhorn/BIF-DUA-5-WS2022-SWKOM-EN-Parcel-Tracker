@@ -18,6 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "Parcels")
 @AllArgsConstructor
+@Table(name = "parcel")
 public class ParcelEntity {
     public ParcelEntity() {
 
@@ -61,9 +62,11 @@ public class ParcelEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column
     private long id;
 
     @DecimalMin("0")
+    @Column
     private Float weight;
 
     @OneToOne
@@ -77,11 +80,12 @@ public class ParcelEntity {
     private RecipientEntity sender;
 
     @Pattern(regexp = "^[A-Z0-9]{9}$",message = ValidatorErrorMessages.ERROR_MESSAGE_PARCEL_CODE)
-   @NotNull
+    @NotNull
     @Column
     private String trackingId;
 
     @NotNull
+    @Column
     private StateEnum state;
 
     @Singular
