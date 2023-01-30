@@ -5,11 +5,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity
+
 @Data
+@Entity
 public class GeoCoordinateEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
     @Column

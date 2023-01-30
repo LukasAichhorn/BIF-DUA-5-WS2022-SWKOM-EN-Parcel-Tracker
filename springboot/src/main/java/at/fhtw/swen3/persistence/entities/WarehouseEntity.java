@@ -27,7 +27,7 @@ public class WarehouseEntity extends HopEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private String id;
 
     @Column
     private Integer level;

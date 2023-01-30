@@ -9,9 +9,6 @@ import java.util.List;
 
 
 @Repository
-public interface WarehouseRepository extends JpaRepository<WarehouseEntity, Long> {
-
-    HopEntity findByCode(String code);
-
+public interface WarehouseRepository extends JpaRepository<WarehouseEntity, String> {
 
 }

@@ -2,11 +2,14 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.ParcelApi;
+import at.fhtw.swen3.persistence.entities.ErrorEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.ParcelService;
+import at.fhtw.swen3.services.dto.Error;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
 import at.fhtw.swen3.services.dto.TrackingInformation;
+import at.fhtw.swen3.services.mapper.ErrorMapper;
 import at.fhtw.swen3.services.mapper.ParcelMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
@@ -47,62 +50,76 @@ public class ParcelApiController implements ParcelApi {
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/parcel/{trackingId}/reportDelivery/",
-            produces = { "application/json" }
+            produces = {"application/json"}
     )
     @Override
-    public ResponseEntity<Void> reportParcelDelivery(
-        @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 "
-                , required = true) @PathVariable("trackingId") String trackingId)
-    {
+    public ResponseEntity<?> reportParcelDelivery(
+            @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 "
+                    , required = true) @PathVariable("trackingId") String trackingId) {
+        parcelService.reportParcelDelivery(trackingId);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/parcel/{trackingId}/reportHop/{code}",
-            produces = { "application/json" }
+            produces = {"application/json"}
     )
     @Override
     public ResponseEntity<Void> reportParcelHop(
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
             @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$") @Parameter(name = "code", description = "The Code of the hop (Warehouse or Truck).", required = true) @PathVariable("code") String code
     ) {
+        parcelService.reportParcelArrivedAtHop(trackingId, code);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
+
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/parcel",
-            produces = { "application/json" },
-            consumes = { "application/json" }
+            produces = {"application/json"},
+            consumes = {"application/json"}
     )
     @Override
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-            ParcelEntity parcelEntity = ParcelMapper.INSTANCE.fromParcelDtoToParcelEntity(parcel);
-            parcelEntity.setTrackingId("A00000000");
-           NewParcelInfo dto = ParcelMapper.INSTANCE.fromParcelEntityToNewParcelInfo(parcelEntity);
 
-        return new ResponseEntity<NewParcelInfo>(dto,HttpStatus.CREATED);
+        ParcelEntity parcelEntity = ParcelMapper.INSTANCE.fromParcelDtoToParcelEntity(parcel);
+        Optional<ParcelEntity> response = parcelService.submitParcelToLogisticsService(parcelEntity);
+        if (response.isPresent()) {
+            NewParcelInfo dto = ParcelMapper.INSTANCE.fromParcelEntityToNewParcelInfo(response.get());
+            return new ResponseEntity<NewParcelInfo>(dto, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<NewParcelInfo>(HttpStatus.BAD_REQUEST);
+
+
     }
+
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/parcel/{trackingId}",
-            produces = { "application/json" }
+            produces = {"application/json"}
     )
     @Override
     public ResponseEntity<TrackingInformation> trackParcel(
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId
     ) {
-        //ParcelEntity parcelEntity = parcelService.getTrackingInformation(trackingId);
-        //TrackingInformation trackingInformation = ParcelMapper.INSTANCE.fromParcelEntityToTrackingInformation(parcelEntity);
-        return new ResponseEntity<TrackingInformation>(HttpStatus.OK);
+        Optional<ParcelEntity> parcelEntity = parcelService.getCurrentStateOfParcel(trackingId);
+        if(parcelEntity.isPresent()){
+            TrackingInformation trackingInformation = ParcelMapper.INSTANCE.fromParcelEntityToTrackingInformation(parcelEntity.get());
+            return new ResponseEntity<TrackingInformation>(HttpStatus.OK);
+        }
+        return new ResponseEntity<TrackingInformation>(HttpStatus.BAD_REQUEST);
     }
+
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/parcel/{trackingId}",
-            produces = { "application/json" },
-            consumes = { "application/json" }
+            produces = {"application/json"},
+            consumes = {"application/json"}
     )
 
     @Override

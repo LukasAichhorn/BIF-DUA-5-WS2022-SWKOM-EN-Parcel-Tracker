@@ -11,11 +11,12 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Data
-@Table(name = "hopArrival")
+@Table(name = "HopArrivals")
+
 public class HopArrivalEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @Column
     @NotNull
@@ -31,6 +32,6 @@ public class HopArrivalEntity {
     private OffsetDateTime dateTime;
 
     @ManyToOne
-    @JoinColumn(name = "parcels")
+    //@JoinColumn(name = "parcels")
     private ParcelEntity parcel;
 }

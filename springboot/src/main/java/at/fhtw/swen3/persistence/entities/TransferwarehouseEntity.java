@@ -8,16 +8,17 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
-@Entity
+
 @SuperBuilder
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class TransferwarehouseEntity extends HopEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @Column
     private String regionGeoJson;
