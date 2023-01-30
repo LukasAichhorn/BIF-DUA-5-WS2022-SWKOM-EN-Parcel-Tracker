@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class TruckEntity extends HopEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String id;
+    private int id;
 
     @Column
     private String regionGeoJson;

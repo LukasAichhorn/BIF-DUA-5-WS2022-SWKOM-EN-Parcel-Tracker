@@ -18,7 +18,7 @@ public class TransferwarehouseEntity extends HopEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private int id;
 
     @Column
     private String regionGeoJson;

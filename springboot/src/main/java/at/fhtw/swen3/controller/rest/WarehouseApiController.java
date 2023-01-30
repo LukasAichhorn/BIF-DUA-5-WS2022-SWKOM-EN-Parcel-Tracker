@@ -2,8 +2,14 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
+import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.persistence.entities.WarehouseEntity;
+import at.fhtw.swen3.services.ParcelService;
+import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.Warehouse;
+import at.fhtw.swen3.services.mapper.ParcelMapper;
+import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,8 @@ import javax.validation.Valid;
 public class WarehouseApiController implements WarehouseApi {
 
     private final NativeWebRequest request;
+    @Autowired
+    private WarehouseService warehouseService;
 
 
     @Autowired
@@ -72,6 +80,11 @@ public class WarehouseApiController implements WarehouseApi {
     public ResponseEntity<Void> importWarehouses(
             @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
     ) {
+        System.out.println("sdsdsd");
+        System.out.println(warehouse);
+        WarehouseEntity warehouseEntities = WarehouseMapper.INSTANCE.warehouseDtoToWarehouseEntity(warehouse);
+        warehouseService.importWarehouses(warehouseEntities);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }

@@ -2,11 +2,14 @@ package at.fhtw.swen3.persistence.entities;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-
+@Getter
+@Setter
 @Data
 @Entity
 public class WarehouseNextHopsEntity {
@@ -20,6 +23,8 @@ public class WarehouseNextHopsEntity {
 
 
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private HopEntity hop;
+
+
 }
