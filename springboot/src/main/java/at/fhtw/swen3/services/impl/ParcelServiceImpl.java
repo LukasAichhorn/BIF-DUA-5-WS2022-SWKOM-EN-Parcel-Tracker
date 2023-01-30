@@ -29,19 +29,16 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public Optional<ParcelEntity> submitParcelToLogisticsService(ParcelEntity newParcel) {
 
-        //Optional<RecipientEntity> sender = recipientRepository.findById(newParcel.getSender().getId());
-        //Optional<RecipientEntity> receiver = recipientRepository.findById(newParcel.getRecipient().getId());
         RecipientEntity recipientEntity = newParcel.getRecipient();
         RecipientEntity senderEntity = newParcel.getSender();
         recipientRepository.save(recipientEntity);
         recipientRepository.save(senderEntity);
         recipientRepository.flush();
         // TODO how to generate unique String for Parcel
-        newParcel.setTrackingId("AAAAAAAAA");
+        newParcel.setTrackingId("REVIEW001");
         newParcel.setState(ParcelEntity.StateEnum.INTRANSPORT);
             ParcelEntity parcel = parcelRepository.save(newParcel);
             parcelRepository.flush();
-
             long id = parcel.getId();
         return parcelRepository.findById(id);
     }

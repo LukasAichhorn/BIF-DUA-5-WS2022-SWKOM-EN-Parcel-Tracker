@@ -35,7 +35,7 @@ public class RecipientEntityTest {
         testEntity.setName("Vorname Nachname");
     }
 
-    //@Test
+    @Test
     public void TestValidation_PostalCode_if_Country_is_Austria_error(){
        testEntity.setPostalCode("A-12");
        Set<ConstraintViolation<RecipientEntity>> violations = validator.validate(testEntity);
