@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "Parcels")
 @AllArgsConstructor
 @Table(name = "parcel")
 public class ParcelEntity {
