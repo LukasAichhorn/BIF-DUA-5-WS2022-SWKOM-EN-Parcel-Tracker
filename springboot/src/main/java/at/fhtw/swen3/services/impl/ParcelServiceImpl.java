@@ -12,12 +12,14 @@ import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.HopArrival;
 import at.fhtw.swen3.services.dto.Parcel;
 import com.sun.xml.bind.v2.TODO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ParcelServiceImpl implements ParcelService {
     @Autowired
     private ParcelRepository parcelRepository;
