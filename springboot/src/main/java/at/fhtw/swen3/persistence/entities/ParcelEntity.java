@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @Entity
 @AllArgsConstructor
-@Table(name = "parcel")
+@Table(name = "parcels")
 public class ParcelEntity {
     public ParcelEntity() {
 

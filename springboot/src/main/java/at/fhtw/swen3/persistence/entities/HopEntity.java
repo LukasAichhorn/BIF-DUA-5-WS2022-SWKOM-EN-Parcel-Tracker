@@ -12,17 +12,20 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @Entity
+@Table(name = "hopEntity")
 public class HopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Column
     private String hopType;
 
     @Column
-    @Pattern(regexp = "^A-[0-9]{4}")
+    @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$")
     private String code;
 
     @Column
@@ -34,6 +37,6 @@ public class HopEntity {
     @Column
     private String locationName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private GeoCoordinateEntity locationCoordinates;
 }

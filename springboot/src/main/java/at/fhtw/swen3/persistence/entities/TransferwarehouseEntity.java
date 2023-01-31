@@ -14,11 +14,10 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
+
 public class TransferwarehouseEntity extends HopEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+
 
     @Column
     private String regionGeoJson;
