@@ -2,6 +2,7 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.ParcelApi;
+import at.fhtw.swen3.persistence.DALException;
 import at.fhtw.swen3.persistence.entities.ErrorEntity;
 import at.fhtw.swen3.persistence.entities.ParcelEntity;
 import at.fhtw.swen3.services.ParcelService;
@@ -56,9 +57,16 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<?> reportParcelDelivery(
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 "
                     , required = true) @PathVariable("trackingId") String trackingId) {
+        try{
         parcelService.reportParcelDelivery(trackingId);
-
+        log.info("Parcel delivered with ID: " + trackingId);
         return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        catch (DALException e){
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @RequestMapping(
@@ -71,8 +79,16 @@ public class ParcelApiController implements ParcelApi {
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId,
             @Pattern(regexp = "^[A-Z]{4}\\d{1,4}$") @Parameter(name = "code", description = "The Code of the hop (Warehouse or Truck).", required = true) @PathVariable("code") String code
     ) {
+        try{
+
         parcelService.reportParcelArrivedAtHop(trackingId, code);
+        log.info("Parcel with ID: " + trackingId + " arrived at Hop with code: " + code);
         return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        catch (DALException e){
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 
@@ -86,14 +102,18 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<NewParcelInfo> submitParcel(
             @Parameter(name = "Parcel", description = "", required = true) @Valid @RequestBody Parcel parcel
     ) {
-
+        try{
         ParcelEntity parcelEntity = ParcelMapper.INSTANCE.fromParcelDtoToParcelEntity(parcel);
         Optional<ParcelEntity> response = parcelService.submitParcelToLogisticsService(parcelEntity);
-        if (response.isPresent()) {
+
             NewParcelInfo dto = ParcelMapper.INSTANCE.fromParcelEntityToNewParcelInfo(response.get());
+            log.info("Parcel created with ID: " + dto.getTrackingId());
             return new ResponseEntity<NewParcelInfo>(dto, HttpStatus.CREATED);
         }
-        return new ResponseEntity<NewParcelInfo>(HttpStatus.BAD_REQUEST);
+        catch(DALException e){
+            log.error(e.getMessage());
+            return new ResponseEntity<NewParcelInfo>(HttpStatus.BAD_REQUEST);
+        }
 
 
     }
@@ -107,12 +127,18 @@ public class ParcelApiController implements ParcelApi {
     public ResponseEntity<TrackingInformation> trackParcel(
             @Pattern(regexp = "^[A-Z0-9]{9}$") @Parameter(name = "trackingId", description = "The tracking ID of the parcel. E.g. PYJRB4HZ6 ", required = true) @PathVariable("trackingId") String trackingId
     ) {
-        Optional<ParcelEntity> parcelEntity = parcelService.getCurrentStateOfParcel(trackingId);
-        if(parcelEntity.isPresent()){
+        try{
+
+            Optional<ParcelEntity> parcelEntity = parcelService.getCurrentStateOfParcel(trackingId);
             TrackingInformation trackingInformation = ParcelMapper.INSTANCE.fromParcelEntityToTrackingInformation(parcelEntity.get());
-            return new ResponseEntity<TrackingInformation>(HttpStatus.OK);
+            log.info("Parcel tracked with ID: " + trackingId);
+            return new ResponseEntity<TrackingInformation>(trackingInformation, HttpStatus.OK);
+
         }
-        return new ResponseEntity<TrackingInformation>(HttpStatus.BAD_REQUEST);
+        catch (DALException e){
+            log.error(e.getMessage());
+            return new ResponseEntity<TrackingInformation>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(

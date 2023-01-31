@@ -2,13 +2,13 @@ package at.fhtw.swen3.controller.rest;
 
 
 import at.fhtw.swen3.controller.WarehouseApi;
-import at.fhtw.swen3.persistence.entities.ParcelEntity;
+import at.fhtw.swen3.persistence.DALException;
+import at.fhtw.swen3.persistence.entities.HopEntity;
 import at.fhtw.swen3.persistence.entities.WarehouseEntity;
-import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.Warehouse;
-import at.fhtw.swen3.services.mapper.ParcelMapper;
+import at.fhtw.swen3.services.mapper.HopMapper;
 import at.fhtw.swen3.services.mapper.WarehouseMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
@@ -45,50 +45,73 @@ public class WarehouseApiController implements WarehouseApi {
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/warehouse",
-            produces = { "application/json" }
+            produces = {"application/json"}
     )
     @Override
     @ResponseBody
     public ResponseEntity<Warehouse> exportWarehouses() {
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            Optional<WarehouseEntity> responseEntity = warehouseService.getAllWarehouses();
+            Warehouse dto = WarehouseMapper.INSTANCE.warehouseEntitiyToWarehouseDto(responseEntity.get());
+            log.info("Warehouses successfully exported.");
+            return new ResponseEntity<Warehouse>(dto, HttpStatus.OK);
+        }
+        catch(DALException e){
+            log.error(e.getMessage());
+            return new ResponseEntity<Warehouse>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/warehouse/{code}",
-            produces = { "application/json" }
+            produces = {"application/json"}
     )
     @Override
     public ResponseEntity<Hop> getWarehouse(
             @Parameter(name = "code", description = "", required = true) @PathVariable("code") String code
     ) {
-        System.out.println(code);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            Optional<HopEntity> responseEntity = warehouseService.findHop(code);
+
+            String hopType = responseEntity.get().getHopType();
+            Hop dto = HopMapper.INSTANCE.hopEntitiyToHopDto(responseEntity.get());
+            dto.setHopType(hopType);
+            log.info("Hop found with code: " + code);
+
+            return new ResponseEntity<Hop>(dto, HttpStatus.OK);
+        } catch (DALException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<Hop>(HttpStatus.BAD_REQUEST);
+        }
 
     }
-
 
 
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/warehouse",
-            produces = { "application/json" },
-            consumes = { "application/json" }
+            produces = {"application/json"},
+            consumes = {"application/json"}
     )
     @Override
     @ResponseBody
     public ResponseEntity<Void> importWarehouses(
             @Parameter(name = "Warehouse", description = "", required = true) @Valid @RequestBody Warehouse warehouse
     ) {
-        System.out.println("sdsdsd");
-        System.out.println(warehouse);
-        WarehouseEntity warehouseEntities = WarehouseMapper.INSTANCE.warehouseDtoToWarehouseEntity(warehouse);
-        warehouseService.importWarehouses(warehouseEntities);
+        try{
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+            WarehouseEntity warehouseEntities = WarehouseMapper.INSTANCE.warehouseDtoToWarehouseEntity(warehouse);
+            warehouseService.importWarehouses(warehouseEntities);
+            log.info("Warehouses imported!");
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
-
 
 
 }

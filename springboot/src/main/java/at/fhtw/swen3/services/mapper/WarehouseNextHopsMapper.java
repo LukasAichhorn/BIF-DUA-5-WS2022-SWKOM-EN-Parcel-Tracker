@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = {HopMapper.class})
 public interface WarehouseNextHopsMapper {
     WarehouseNextHopsMapper INSTANCE = Mappers.getMapper(WarehouseNextHopsMapper.class);
+
     WarehouseNextHops warehouseNextHopsEntitiyToWarehouseNextHopsDto(WarehouseNextHopsEntity warehouseNextHopsEntity);
     WarehouseNextHopsEntity warehouseNextHopsDtoToWarehouseNextHopsEntity(WarehouseNextHops warehouseNextHopsDto);
 
